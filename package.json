@@ -1,0 +1,29 @@
+{
+  "name": "kalpasnodeintern",
+  "version": "1.0.0",
+  "description": "This project is made for shortlisting task for Kalpas NodeJS developer Intern",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "devStart": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/balayokesh/KalpasNodeIntern.git"
+  },
+  "author": "Bala Yokesh Mani A",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/balayokesh/KalpasNodeIntern/issues"
+  },
+  "homepage": "https://github.com/balayokesh/KalpasNodeIntern#readme",
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "nodemon": "^2.0.12"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.13.2"
+  }
+}
