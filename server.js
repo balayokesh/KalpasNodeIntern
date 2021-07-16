@@ -13,7 +13,7 @@ const bodyParser = require('body-parser')
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: false})); 
 
 // Configure routes
 const indexRouter = require('./routes/index');
@@ -29,4 +29,6 @@ const db = mongoose.connection;
 db.on('error', err => console.log(err));
 db.once('open', () => console.log("Connected to Mongoose"));
 
-app.listen(PORT);
+app.listen(PORT, () => {
+    console.log(`Server running at PORT: ${PORT}`);
+});

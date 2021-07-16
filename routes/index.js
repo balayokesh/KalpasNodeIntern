@@ -1,12 +1,18 @@
+// Import npm modules
 const router = require('express').Router();
 const fs = require('fs');
 const csv = require('csv-parser');
+const jwt = require('jsonwebtoken');
+
+// Import authenticator
+const checkLogin = require('../controllers/authenticate.js');
 
 // Import Models
 const Employee = require('../models/employee.model');
+const Admin = require('../models/admin.model');
 
 // Create
-router.post('/', (req, res) => {
+router.post('/', checkLogin, (req, res) => {
     const results = [];
     const filePath = req.body.filePath;
     fs.createReadStream(filePath)
@@ -30,29 +36,48 @@ router.post('/', (req, res) => {
 });
 
 // Read
-router.get('/:id', (req, res) => {
+router.get('/:id', checkLogin, (req, res) => {
     Employee.findById(req.params.id)
         .then(emp => res.json(emp))
         .catch(err => res.status(400).json(`Error: ${err}`));
 });
 
 // Update
-router.post('/edit/:id', (req, res) => {
+router.post('/edit/:id', checkLogin, (req, res) => {
     Employee.findById(req.params.id)
         .then(employee => {
             employee.name = req.body.name;
             employee.age = req.body.age;
             employee.save()
-                .then(() => res.json('Employee details deleted'))
+                .then(() => res.json('Employee details edited'))
                 .catch(err => res.status(400).json(`Error: ${err}`));
         })
-})
+});
     
 
 // Delete
-router.delete('/:id', (req, res) => {
+router.delete('/:id', checkLogin, (req, res) => {
     Employee.findByIdAndDelete(req.params.id)
         .then(() => res.json('Employee details deleted'))
+        .catch(err => res.status(400).json(`Error: ${err}`));
+});
+
+// Login
+router.post('/login', (req, res) => {
+    let { username, password } = req.body;
+    Admin.findOne({username: username, password: password})
+        .then(record => {
+            if (!record) {
+                res.json(`${record} records found for ${username} and ${password}`);
+            }
+            else {
+                const payload = {
+                    username, password
+                }
+                const token = jwt.sign(payload, 'secret', { expiresIn: '1h' });
+                res.json(token);
+            }
+        })
         .catch(err => res.status(400).json(`Error: ${err}`));
 });
 
