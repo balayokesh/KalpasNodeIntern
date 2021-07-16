@@ -68,7 +68,7 @@ router.post('/login', (req, res) => {
     Admin.findOne({username: username, password: password})
         .then(record => {
             if (!record) {
-                res.json(`${record} records found for ${username} and ${password}`);
+                res.json(`No records found for ${username}`);
             }
             else {
                 const payload = {
