@@ -28,4 +28,10 @@ router.post('/', (req, res) => {
     );
 });
 
+router.delete('/:id', (req, res) => {
+    Employee.findByIdAndDelete(req.params.id)
+        .then(() => res.json('Employee details deleted'))
+        .catch(err => res.status(400).json(`Error: ${err}`));
+})
+
 module.exports = router;
