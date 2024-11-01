@@ -18,7 +18,7 @@ npm i
 ```
 
 #### Step 4:
-Create a `process.env` file and assign your own mongoDB atlas URL to `DATABASE_URL` constant.
+Create a `.env` file in project root folder and assign your own mongoDB atlas URL to `DATABASE_URL` constant.
 ```
 DATABASE_URL=<YOUR_OWN_API_KEY>
 ```
